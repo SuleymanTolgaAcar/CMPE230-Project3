@@ -1,4 +1,5 @@
 QT += widgets
+QT += widgets core gui
 
 SOURCES += \
     cell.cpp \
@@ -8,3 +9,6 @@ SOURCES += \
 HEADERS += \
     cell.h \
     grid.h
+
+RESOURCES += \
+    images.qrc
