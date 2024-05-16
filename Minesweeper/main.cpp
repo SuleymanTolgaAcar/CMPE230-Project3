@@ -1,12 +1,9 @@
-#include <iostream>
 #include <QApplication>
 #include <QMainWindow>
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QPushButton>
-#include <vector>
 #include "grid.h"
-#include "cell.h"
 
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
@@ -31,21 +28,9 @@ int main(int argc, char* argv[]) {
     // Add vertical space between grid and horizontal layout
     vb->addSpacerItem(new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Fixed));
 
-    Grid *gl = new Grid();
+    int N = 20; int M = 20; int K = 20;
 
-    int N, M;
-    //std::cin >> N >> M;
-
-    QIcon icon(":/assets/empty.png");
-    gl->setSpacing(0);
-
-    // Create 10 x 10 Grid
-    for (int row = 0; row < 20; row++) {
-        for (int col = 0; col < 20; col++) {
-            Cell *randCell = new Cell(icon);
-            gl->addWidget(randCell, row, col, 1, 1);
-        }
-    }
+    Grid *gl = new Grid(N, M, K);
 
     vb->addLayout(gl);
     cw->setFixedSize(cw->sizeHint());

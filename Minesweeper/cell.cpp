@@ -1,6 +1,8 @@
 #include "cell.h"
 
-Cell::Cell(const QIcon& icon, QWidget* parent) : QPushButton(parent) {
+Cell::Cell(int row, int col, const QIcon& icon, QWidget* parent) : QPushButton(parent) {
+    this->row = row;
+    this->col = col;
     this->icon = icon;
     this->setIcon(icon);
     this->neighborMines = 0; // should be changed
@@ -13,34 +15,13 @@ void Cell::reveal() {
     this->revealed = true;
     QIcon *newIcon;
     // determine the image with respect to neighboring mines.
-    switch (this->neighborMines) {
-    case 0:
-        newIcon = new QIcon(":/assets/0.png");
-        break;
-    case 1:
-        newIcon = new QIcon(":/assets/1.png");
-        break;
-    case 2:
-        newIcon = new QIcon(":/assets/2.png");
-        break;
-    case 3:
-        newIcon = new QIcon(":/assets/3.png");
-        break;
-    case 4:
-        newIcon = new QIcon(":/assets/4.png");
-        break;
-    case 5:
-        newIcon = new QIcon(":/assets/5.png");
-        break;
-    case 6:
-        newIcon = new QIcon(":/assets/6.png");
-        break;
-    case 7:
-        newIcon = new QIcon(":/assets/7.png");
-        break;
+    if (this->mined){
+        newIcon = new QIcon(":/assets/mine.png");
     }
-    this->icon = *newIcon;
-    this->setIcon(this->icon);
+    else {
+        newIcon = new QIcon(QString(":assets/%1.png").arg(QString::number(this->neighborMines)));
+    }
+    this->setIcon(*newIcon);
     QObject::disconnect(this, SIGNAL(clicked()), this, SLOT(reveal()));
 }
 

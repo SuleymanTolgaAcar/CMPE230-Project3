@@ -8,12 +8,14 @@ class Cell : public QPushButton
     Q_OBJECT
 
 public:
-    Cell(const QIcon& icon, QWidget* parent = 0);
+    Cell(int row, int col, const QIcon& icon, QWidget* parent = 0);
     QIcon icon;
     bool revealed;
     bool flagged;
     bool mined;
     int neighborMines;
+    int row;
+    int col;
 public slots:
     void putFlag();
     void reveal();

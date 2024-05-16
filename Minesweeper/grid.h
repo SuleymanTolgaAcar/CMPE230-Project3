@@ -5,7 +5,10 @@ class Grid : public QGridLayout
 {
     Q_OBJECT
 public:
-    Grid();
+    Grid(int row, int col, int mineCount);
+    int row;
+    int col;
+    int mineCount;
 };
 
 #endif // GRID_H
