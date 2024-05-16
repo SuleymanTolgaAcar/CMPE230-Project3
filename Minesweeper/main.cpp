@@ -4,7 +4,6 @@
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QPushButton>
-#include <vector>
 #include "grid.h"
 #include "cell.h"
 
