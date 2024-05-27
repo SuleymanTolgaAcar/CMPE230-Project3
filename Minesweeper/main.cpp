@@ -14,13 +14,11 @@ int main(int argc, char* argv[]) {
     QHBoxLayout *navbar = new QHBoxLayout(cw);
     QLabel *score = new QLabel("Score: 0");
     QPushButton *rst = new QPushButton("Restart");
-    QPushButton *quit = new QPushButton("Quit");
-
-    // Add space between score and buttons
+    QPushButton *hint = new QPushButton("Hint");
     navbar->addWidget(score);
     navbar->addStretch();
     navbar->addWidget(rst);
-    navbar->addWidget(quit);
+    navbar->addWidget(hint);
 
     // Put horizontal layout to the vertical box layouts
     vb->addLayout(navbar);
@@ -31,6 +29,8 @@ int main(int argc, char* argv[]) {
     int N = 20; int M = 20; int K = 20;
 
     Grid *gl = new Grid(N, M, K);
+
+    QObject::connect(rst, SIGNAL(clicked()), gl, SLOT(reset()));    // Add space between score and buttons
 
     vb->addLayout(gl);
     cw->setFixedSize(cw->sizeHint());

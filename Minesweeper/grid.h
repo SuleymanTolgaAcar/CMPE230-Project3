@@ -9,6 +9,11 @@ public:
     int row;
     int col;
     int mineCount;
+    int score;
+private:
+    void countNeighborMines();
+public slots:
+    void reset();
 };
 
 #endif // GRID_H

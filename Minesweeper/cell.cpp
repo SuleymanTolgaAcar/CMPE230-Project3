@@ -17,6 +17,7 @@ void Cell::reveal() {
     // determine the image with respect to neighboring mines.
     if (this->mined){
         newIcon = new QIcon(":/assets/mine.png");
+
     }
     else {
         newIcon = new QIcon(QString(":assets/%1.png").arg(QString::number(this->neighborMines)));
