@@ -11,4 +11,4 @@ HEADERS += \
     grid.h
 
 RESOURCES += \
-    images.qrc
+    assets/images.qrc

@@ -2,6 +2,7 @@
 #define CELL_H
 #include <QPushButton>
 #include <QMouseEvent>
+#include <QMessageBox>
 
 class Cell : public QPushButton
 {

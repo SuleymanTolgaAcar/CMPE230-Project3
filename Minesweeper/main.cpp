@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     Grid *gl = new Grid(N, M, K);
 
     QObject::connect(rst, SIGNAL(clicked()), gl, SLOT(reset()));    // Add space between score and buttons
-
+    QObject::connect(hint, SIGNAL(clicked()), gl, SLOT(hint()));    // Add space between score and buttons
     vb->addLayout(gl);
     cw->setFixedSize(cw->sizeHint());
     cw->setWindowTitle("Minesweeper");

@@ -61,3 +61,35 @@ void Grid::countNeighborMines() {
     }
 }
 
+void Grid::hint() {
+    for (int r = 0; r < this->row; r++) {
+        for (int c = 0; c < this->col; c++) {
+            Cell *cell = qobject_cast<Cell*>(this->itemAtPosition(r, c)->widget());
+            if (cell->mined || cell->revealed) {
+                continue;
+            }
+            else {
+                for (int i = -1; i <= 1; i++) {
+                    for (int j = -1; j <= 1; j++) {
+                        int neighborRow = r + i;
+                        int neighborCol = c + j;
+
+                        // Skip the current cell
+                        if (i == 0 && j == 0) {
+                            continue;
+                        }
+
+                        // Check if the neighboring cell is within the grid boundaries
+                        if (neighborRow >= 0 && neighborRow < this->row && neighborCol >= 0 && neighborCol < this->col) {
+                            Cell *neighborCell = qobject_cast<Cell*>(this->itemAtPosition(neighborRow, neighborCol)->widget());
+                            if (neighborCell->revealed) {
+                                cell->setIcon(QIcon(":/assets/hint.png"));
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
