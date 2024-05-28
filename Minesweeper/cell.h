@@ -21,6 +21,7 @@ public:
     int neighborMines;
     int row;
     int col;
+    bool hinted;
 public slots:
     void putFlag();
     void revealSlot();

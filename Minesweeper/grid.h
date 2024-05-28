@@ -13,6 +13,7 @@ public:
     int col;
     int mineCount;
     int score;
+    bool hintGiven;
 public slots:
     void reset();
     void hint();

@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
     QWidget *cw = new QWidget;
     QVBoxLayout *vb = new QVBoxLayout(cw);
 
-    // Create horizontal layout for score and buttons
+    // create horizontal layout for score and buttons
     QHBoxLayout *navbar = new QHBoxLayout(cw);
     QLabel *scoreLabel = new QLabel(QString("Score: 0"));
     QPushButton *resetButton = new QPushButton("Restart");
@@ -27,14 +27,19 @@ int main(int argc, char* argv[]) {
     // Add vertical space between grid and horizontal layout
     vb->addSpacerItem(new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Fixed));
 
+    // N = row count, M = column count, K = mine count
     int N = 20; int M = 20; int K = 50;
 
+    // initialize the grid
     Grid *gl = new Grid(N, M, K);
 
-    QObject::connect(resetButton, SIGNAL(clicked()), gl, SLOT(reset()));    // Add space between score and buttons
-    QObject::connect(hintButton, SIGNAL(clicked()), gl, SLOT(hint()));    // Add space between score and buttons
+    // connect signals for buttons
+    QObject::connect(resetButton, SIGNAL(clicked()), gl, SLOT(reset()));
+    QObject::connect(hintButton, SIGNAL(clicked()), gl, SLOT(hint()));
+    // connect signal for updating score when a cell is revealed
     QObject::connect(gl, SIGNAL(revealedSignal(QString)), scoreLabel, SLOT(setText(QString)));
 
+    // fix the size and display the app
     vb->addLayout(gl);
     cw->setFixedSize(cw->sizeHint());
     cw->setWindowTitle("Minesweeper");
