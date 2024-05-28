@@ -1,35 +1,39 @@
 #include "cell.h"
 
-Cell::Cell(int row, int col, const QIcon& icon, QWidget* parent) : QPushButton(parent) {
+#include "grid.h"
+
+Cell::Cell(int row, int col, Grid* grid, QWidget* parent) : QPushButton(parent) {
     this->row = row;
     this->col = col;
-    this->icon = icon;
-    this->setIcon(icon);
-    this->neighborMines = 0; // should be changed
+    this->grid = grid;
     this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    this->setFixedSize(icon.actualSize(QSize(15, 15)));
-    QObject::connect(this, SIGNAL(clicked()), this, SLOT(reveal()));
+    this->initialize();
+}
+
+void Cell::initialize() {
+    this->neighborMines = 0;
+    this->mined = false;
+    this->revealed = false;
+    this->flagged = false;
+    this->setIcon(QIcon(":/empty.png"));
+    this->setFixedSize(QSize(15, 15));
+    QObject::connect(this, SIGNAL(clicked()), this, SLOT(revealSlot()));
+}
+
+void Cell::revealSlot() {
+    this->grid->revealCells(this->row, this->col);
 }
 
 void Cell::reveal() {
     this->revealed = true;
-    bool clickedMine = false;
-    QIcon *newIcon;
-    // determine the image with respect to neighboring mines.
+
     if (this->mined){
-        newIcon = new QIcon(":/mine.png");
-        clickedMine = true;
-    }
-    else {
-        newIcon = new QIcon(QString(":/%1.png").arg(QString::number(this->neighborMines)));
-    }
-    this->setIcon(*newIcon);
-    QObject::disconnect(this, SIGNAL(clicked()), this, SLOT(reveal()));
-    if (clickedMine) {
-        QMessageBox msgBox;
-        msgBox.setText("You lose!");
-        msgBox.exec();
-        msgBox.setStandardButtons(QMessageBox::Ok);
+        this->setIcon(QIcon(":/mine.png"));
+        emit gameOver(false);
+    } else {
+        this->grid->score++;
+        this->setIcon(QIcon(QString(":/%1.png").arg(QString::number(this->neighborMines))));
+        QObject::disconnect(this, SIGNAL(clicked()), this, SLOT(revealSlot()));
     }
 }
 
@@ -42,15 +46,12 @@ void Cell::mousePressEvent(QMouseEvent *event) {
 }
 
 void Cell::putFlag() {
-    QIcon *newIcon;
     if (this->flagged) {
         this->flagged = false;
-        newIcon = new QIcon(":/empty.png");
+        this->setIcon(QIcon(":/empty.png"));
     }
     else {
         this->flagged = true;
-        newIcon = new QIcon(":/flag.png");
+        this->setIcon(QIcon(":/flag.png"));
     }
-    this->icon = *newIcon;
-    this->setIcon(this->icon);
 }
