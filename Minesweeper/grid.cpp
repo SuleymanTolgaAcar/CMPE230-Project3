@@ -11,6 +11,7 @@ Grid::Grid(const int row, const int col, const int mineCount) : QGridLayout() {
     this->initialize();
 }
 
+// reset all values to defaults
 void Grid::initialize() {
     // set seed for rand
     srand(time(0));
@@ -131,6 +132,7 @@ bool Grid::checkGameOver(){
     return won;
 }
 
+// find a safe cell to give as hint, the cell should be deducable by the player
 void Grid::hint() {
     // if a hint is already given, find the hinted cell and reveal it
     if (this->hintGiven){
@@ -228,7 +230,9 @@ void Grid::hint() {
     }
 }
 
+// game over slot
 void Grid::gameOver(bool won) {
+    // reveal all mines
     for (int r = 0; r < this->row; r++){
         for (int c = 0; c < this->col; c++){
             Cell* cell = qobject_cast<Cell*>(this->itemAtPosition(r, c)->widget());
@@ -240,6 +244,7 @@ void Grid::gameOver(bool won) {
         }
     }
 
+    // display appropriate message box
     if (won) {
         QMessageBox msgBox;
         msgBox.setText("You win!");
