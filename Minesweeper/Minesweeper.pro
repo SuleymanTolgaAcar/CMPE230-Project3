@@ -1,5 +1,4 @@
 QT += widgets
-QT += widgets core gui
 
 SOURCES += \
     cell.cpp \

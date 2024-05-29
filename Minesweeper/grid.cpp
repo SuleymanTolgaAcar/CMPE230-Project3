@@ -1,13 +1,11 @@
 #include "grid.h"
 #include "cell.h"
-
 #include <QQueue>
 
 Grid::Grid(const int row, const int col, const int mineCount) : QGridLayout() {
     this->row = row;
     this->col = col;
     this->mineCount = mineCount;
-
     this->initialize();
 }
 
@@ -18,6 +16,7 @@ void Grid::initialize() {
     this->setSpacing(0);
     this->score = 0;
     this->hintGiven = false;
+    this->gameOverBool = false;
     emit revealedSignal(QString("Score: 0"));
 
     // if this is the first time, call the cell constructor and add them to grid
@@ -121,6 +120,7 @@ void Grid::revealCells(int row, int col){
 // check whether there is an unrevealed cell or not
 bool Grid::checkGameOver(){
     bool won = true;
+
     for (int r = 0; r < this->row; r++) {
         for (int c = 0; c < this->col; c++) {
             Cell *cell = qobject_cast<Cell*>(this->itemAtPosition(r, c)->widget());
@@ -134,6 +134,10 @@ bool Grid::checkGameOver(){
 
 // find a safe cell to give as hint, the cell should be deducable by the player
 void Grid::hint() {
+    if (gameOverBool){
+        return;
+    }
+
     // if a hint is already given, find the hinted cell and reveal it
     if (this->hintGiven){
         for (int r = 0; r < this->row; ++r) {
@@ -232,6 +236,7 @@ void Grid::hint() {
 
 // game over slot
 void Grid::gameOver(bool won) {
+    this->gameOverBool = true;
     // reveal all mines
     for (int r = 0; r < this->row; r++){
         for (int c = 0; c < this->col; c++){
@@ -247,11 +252,13 @@ void Grid::gameOver(bool won) {
     // display appropriate message box
     if (won) {
         QMessageBox msgBox;
+        msgBox.setWindowTitle("Game Over");
         msgBox.setText("You win!");
         msgBox.exec();
         msgBox.setStandardButtons(QMessageBox::Ok);
     } else {
         QMessageBox msgBox;
+        msgBox.setWindowTitle("Game Over");
         msgBox.setText("You lose!");
         msgBox.exec();
         msgBox.setStandardButtons(QMessageBox::Ok);
