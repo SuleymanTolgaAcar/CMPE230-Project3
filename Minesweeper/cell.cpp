@@ -1,5 +1,4 @@
 #include "cell.h"
-
 #include "grid.h"
 
 Cell::Cell(int row, int col, Grid* grid, QWidget* parent) : QPushButton(parent) {
@@ -47,7 +46,7 @@ void Cell::reveal() {
 
 // right click functionality
 void Cell::mousePressEvent(QMouseEvent *event) {
-    if (event->button() == Qt::RightButton && !this->revealed) {
+    if (event->button() == Qt::RightButton && !this->revealed && !this->grid->gameOverBool) {
         putFlag();
     } else {
         QPushButton::mousePressEvent(event);

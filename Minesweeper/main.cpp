@@ -1,3 +1,10 @@
+/**
+ * Minesweeper Game
+ * Implemented by Mehmet Ali Özdemir and Süleyman Tolga Acar
+ * IDs: 2021400000 and 2021400237
+ * Date: 29.05.2024
+ **/
+
 #include <QApplication>
 #include <QMainWindow>
 #include <QLabel>
@@ -36,6 +43,7 @@ int main(int argc, char* argv[]) {
     // connect signals for buttons
     QObject::connect(resetButton, SIGNAL(clicked()), gl, SLOT(reset()));
     QObject::connect(hintButton, SIGNAL(clicked()), gl, SLOT(hint()));
+
     // connect signal for updating score when a cell is revealed
     QObject::connect(gl, SIGNAL(revealedSignal(QString)), scoreLabel, SLOT(setText(QString)));
 

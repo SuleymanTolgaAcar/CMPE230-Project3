@@ -1,6 +1,7 @@
 #ifndef GRID_H
 #define GRID_H
 #include <QGridLayout>
+
 class Grid : public QGridLayout
 {
     Q_OBJECT
@@ -9,6 +10,7 @@ public:
     void initialize();
     void revealCells(int row, int col);
     bool checkGameOver();
+    bool gameOverBool;
     int row;
     int col;
     int mineCount;
