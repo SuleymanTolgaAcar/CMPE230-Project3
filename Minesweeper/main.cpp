@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
     vb->addSpacerItem(new QSpacerItem(0, 20, QSizePolicy::Minimum, QSizePolicy::Fixed));
 
     // N = row count, M = column count, K = mine count
-    int N = 15; int M = 15; int K = 20;
+    int N = 15; int M = 15; int K = 15;
 
     // initialize the grid
     Grid *gl = new Grid(N, M, K);

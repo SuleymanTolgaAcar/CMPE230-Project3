@@ -18,6 +18,7 @@ void Grid::initialize() {
     this->setSpacing(0);
     this->score = 0;
     this->hintGiven = false;
+    this->gameOverBool = false;
     emit revealedSignal(QString("Score: 0"));
 
     // if this is the first time, call the cell constructor and add them to grid
@@ -37,6 +38,10 @@ void Grid::initialize() {
 
     // randomly place mines
     for (int m = 0; m < mineCount; m++){
+        if (m == this->row * this->col){
+            break;
+        }
+
         Cell *cell;
         // if the current random cell is already mined, skip it and find a new cell to mine
         do {
@@ -134,6 +139,10 @@ bool Grid::checkGameOver(){
 
 // find a safe cell to give as hint, the cell should be deducable by the player
 void Grid::hint() {
+    if(this->gameOverBool){
+        return;
+    }
+
     // if a hint is already given, find the hinted cell and reveal it
     if (this->hintGiven){
         for (int r = 0; r < this->row; ++r) {
@@ -232,6 +241,8 @@ void Grid::hint() {
 
 // game over slot
 void Grid::gameOver(bool won) {
+    this->gameOverBool = true;
+
     // reveal all mines
     for (int r = 0; r < this->row; r++){
         for (int c = 0; c < this->col; c++){

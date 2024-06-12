@@ -14,6 +14,7 @@ public:
     int mineCount;
     int score;
     bool hintGiven;
+    bool gameOverBool;
 public slots:
     void reset();
     void hint();
